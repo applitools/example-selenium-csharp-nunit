@@ -10,8 +10,9 @@
 # Steps to run this example
 
 1. Git clone this repo
-2. Open the folder
+    * `git clone https://github.com/applitools/tutorial-selenium-csharp-visualgrid.git`
+2. Open the folder `tutorial-selenium-csharp-visualgrid`
 3. Double click the `ApplitoolsTutorial.sln`. This will open the project in Visual Studio
-3. Change the APPLITOOLS_API_KEY with your own.
-  * Login to Applitools > Click on the Person icon > My API Key
+3. Change the `APPLITOOLS_API_KEY` with your own.
+    * Login to Applitools > Click on the Person icon > My API Key
 4. Hit Run
