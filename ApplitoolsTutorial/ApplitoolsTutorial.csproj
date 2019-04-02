@@ -38,7 +38,7 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Eyes.Sdk.DotNet">
-      <HintPath>..\packages\Eyes.Sdk.2.21.12-beta\lib\net45\Eyes.Sdk.DotNet.dll</HintPath>
+      <HintPath>..\packages\Eyes.Sdk.2.21.14-beta\lib\net45\Eyes.Sdk.DotNet.dll</HintPath>
     </Reference>
     <Reference Include="System.Management" />
     <Reference Include="System.Web" />
@@ -54,15 +54,18 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="CssParser">
-      <HintPath>..\packages\Eyes.Sdk.2.21.12-beta\lib\net45\CssParser.dll</HintPath>
+      <HintPath>..\packages\Eyes.Sdk.2.21.14-beta\lib\net45\CssParser.dll</HintPath>
     </Reference>
     <Reference Include="Eyes.Selenium.DotNet">
-      <HintPath>..\packages\Eyes.Selenium.2.21.12-beta\lib\net45\Eyes.Selenium.DotNet.dll</HintPath>
+      <HintPath>..\packages\Eyes.Selenium.2.21.14-beta\lib\net45\Eyes.Selenium.DotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

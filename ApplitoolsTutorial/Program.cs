@@ -3,8 +3,10 @@ using Applitools.Selenium;
 using Applitools.VisualGrid;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using static Applitools.Configuration;
+using static Applitools.VisualGrid.ChromeEmulationInfo;
 using Configuration = Applitools.Selenium.Configuration;
-
+using ScreenOrientation = Applitools.VisualGrid.ScreenOrientation;
 
 namespace ApplitoolsTutorial
 {
@@ -34,34 +36,30 @@ namespace ApplitoolsTutorial
             // Create Eyes object with the runner, meaning it'll be a Visual Grid eyes.
             Eyes eyes = new Eyes(runner);
 
-            //Set the Applitools API KEY here or as an environment variable "APPLITOOLS_API_KEY"
-            eyes.ApiKey = "APPLITOOLS_API_KEY";
-
-
             // Create configuration object
             Configuration conf = new Configuration();
-            
 
-            // Set test name
-            conf.TestName = "C# VisualGrid demo";
 
-            // Set app name
-            conf.AppName = "Demo app";
 
-            // Add browsers with different viewports
-            conf.AddBrowser(800, 600, Configuration.BrowserType.CHROME);
-            conf.AddBrowser(700, 500, Configuration.BrowserType.CHROME);
-            conf.AddBrowser(1200, 800, Configuration.BrowserType.FIREFOX);
-            conf.AddBrowser(1600, 1200, Configuration.BrowserType.FIREFOX);
+            // Set the Applitools API KEY here or as an environment variable "APPLITOOLS_API_KEY"
+            conf.SetApiKey("APPLITOOLS_API_KEY")
+                .SetTestName("C# VisualGrid demo")   // Set test name
+                .SetAppName("Demo app");             // Set app name
+
+            // Add different browsers with different viewports
+            conf.AddBrowser(800, 600, BrowserType.CHROME);
+            conf.AddBrowser(700, 500, BrowserType.CHROME);
+            conf.AddBrowser(1200, 800, BrowserType.FIREFOX);
+            conf.AddBrowser(1600, 1200, BrowserType.FIREFOX);
 
             // Add iPhone 4 device emulation in Portraig mode
-            EmulationInfo iphone4 = new EmulationInfo(EmulationInfo.DeviceNameEnum.iPhone_4, Applitools.VisualGrid.ScreenOrientation.Portrait);
+            ChromeEmulationInfo iphone4 = new ChromeEmulationInfo(DeviceNameEnum.iPhone_4, ScreenOrientation.Portrait);
             conf.AddDeviceEmulation(iphone4);
 
 
 
             // Set the configuration object to eyes
-            eyes.Configuration = conf;
+            eyes.SetConfiguration(conf);
 
             // Call Open on eyes to initialize a test session
             eyes.Open(webDriver);
