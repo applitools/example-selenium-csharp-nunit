@@ -39,21 +39,20 @@ namespace ApplitoolsTutorial
 
 
 
-
             //conf.SetApiKey("APPLITOOLS_API_KEY");    // Set the Applitools API KEY here or as an environment variable "APPLITOOLS_API_KEY"
             conf.SetTestName("C# VisualGrid demo")   // Set test name
                 .SetAppName("Demo app");             // Set app name
 
             // Add browsers with different viewports
             conf.AddBrowser(800, 600, BrowserType.CHROME);
-            conf.AddBrowser(700, 500, BrowserType.CHROME);
-            conf.AddBrowser(1200, 800, BrowserType.FIREFOX);
-            conf.AddBrowser(1600, 1200, BrowserType.FIREFOX);
+            conf.AddBrowser(700, 500, BrowserType.FIREFOX);
+            conf.AddBrowser(1200, 800, BrowserType.IE_10);
+            conf.AddBrowser(1600, 1200, BrowserType.IE_11);
+            conf.AddBrowser(1024, 768, BrowserType.EDGE);
 
             // Add iPhone 4 device emulation in Portraig mode
             ChromeEmulationInfo iphone4 = new ChromeEmulationInfo(DeviceName.iPhone_4, ScreenOrientation.Portrait);
             conf.AddDeviceEmulation(iphone4);
-
 
 
             // Set the configuration object to eyes
@@ -72,7 +71,7 @@ namespace ApplitoolsTutorial
             // Close the browser
             webDriver.Quit();
 
-            eyes.Close();
+            eyes.Close(throwEx: false); // don't throw exceptions as this is a demo
             //Wait and collect all test results
             TestResultSummary allTestResults = runner.GetAllTestResults();
             System.Console.WriteLine(allTestResults);
