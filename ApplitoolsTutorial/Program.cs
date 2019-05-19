@@ -50,9 +50,8 @@ namespace ApplitoolsTutorial
             conf.AddBrowser(1600, 1200, BrowserType.IE_11);
             conf.AddBrowser(1024, 768, BrowserType.EDGE);
 
-            // Add iPhone 4 device emulation in Portraig mode
-            ChromeEmulationInfo iphone4 = new ChromeEmulationInfo(DeviceName.iPhone_4, ScreenOrientation.Portrait);
-            conf.AddDeviceEmulation(iphone4);
+            // Add iPhone 4 device emulation in Portrait mode
+            conf.AddDeviceEmulation(DeviceName.iPhone_4, ScreenOrientation.Portrait);
 
 
             // Set the configuration object to eyes
@@ -71,7 +70,8 @@ namespace ApplitoolsTutorial
             // Close the browser
             webDriver.Quit();
 
-            eyes.Close(throwEx: false); // don't throw exceptions as this is a demo
+            eyes.CloseAsync();
+
             //Wait and collect all test results
             TestResultSummary allTestResults = runner.GetAllTestResults();
             System.Console.WriteLine(allTestResults);
