@@ -73,7 +73,7 @@ namespace ApplitoolsTutorial
             eyes.CloseAsync();
 
             //Wait and collect all test results
-            TestResultSummary allTestResults = runner.GetAllTestResults();
+            TestResultsSummary allTestResults = runner.GetAllTestResults();
             System.Console.WriteLine(allTestResults);
         }
 
