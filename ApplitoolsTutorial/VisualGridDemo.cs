@@ -1,6 +1,7 @@
 ﻿using Applitools;
 using Applitools.Selenium;
 using Applitools.VisualGrid;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Configuration = Applitools.Selenium.Configuration;
@@ -9,15 +10,12 @@ using ScreenOrientation = Applitools.VisualGrid.ScreenOrientation;
 namespace ApplitoolsTutorial
 {
 
-    class Program
+    [TestFixture]
+    public class VisualGridDemo
     {
-        public static void Main()
-        {
-            Program program = new Program();
-            program.Run();
-        }
 
-        private void Run()
+        [Test]
+        public void VGTest()
         {
             // Create a new webdriver
             IWebDriver webDriver = new ChromeDriver();
@@ -34,12 +32,11 @@ namespace ApplitoolsTutorial
             // Create Eyes object with the runner, meaning it'll be a Visual Grid eyes.
             Eyes eyes = new Eyes(runner);
 
-            // Create configuration object
-            Configuration conf = new Configuration();
+            // Get current Eyes configuration object
+            Configuration conf = eyes.GetConfiguration();
 
 
-
-            //conf.SetApiKey("APPLITOOLS_API_KEY");    // Set the Applitools API KEY here or as an environment variable "APPLITOOLS_API_KEY"
+            //conf.SetApiKey("APPLITOOLS_API_KEY");  // Set the Applitools API KEY here or as an environment variable "APPLITOOLS_API_KEY"
             conf.SetTestName("C# VisualGrid demo")   // Set test name
                 .SetAppName("Demo app");             // Set app name
 
@@ -49,6 +46,7 @@ namespace ApplitoolsTutorial
             conf.AddBrowser(1200, 800, BrowserType.IE_10);
             conf.AddBrowser(1600, 1200, BrowserType.IE_11);
             conf.AddBrowser(1024, 768, BrowserType.EDGE);
+            conf.AddBrowser(800, 600, BrowserType.SAFARI);
 
             // Add iPhone 4 device emulation in Portrait mode
             conf.AddDeviceEmulation(DeviceName.iPhone_4, ScreenOrientation.Portrait);
@@ -57,24 +55,30 @@ namespace ApplitoolsTutorial
             // Set the configuration object to eyes
             eyes.SetConfiguration(conf);
 
-            // Call Open on eyes to initialize a test session
-            eyes.Open(webDriver);
+            try
+            {
+                // Call Open on eyes to initialize a test session
+                eyes.Open(webDriver);
 
-            // check the login page
-            eyes.Check(Target.Window().Fully().WithName("Login page"));
-            webDriver.FindElement(By.Id("log-in")).Click();
+                // check the login page
+                eyes.Check(Target.Window().Fully().WithName("Login page"));
+                webDriver.FindElement(By.Id("log-in")).Click();
 
-            // Check the app page
-            eyes.Check(Target.Window().Fully().WithName("App page"));
+                // Check the app page
+                eyes.Check(Target.Window().Fully().WithName("App page"));
 
-            // Close the browser
-            webDriver.Quit();
+                // Call Close on eyes to let the server know it should display the results
+                eyes.CloseAsync();
+            }
+            finally
+            {
+                // Close the browser
+                webDriver.Quit();
+            }
 
-            eyes.CloseAsync();
-
-            //Wait and collect all test results
+            // Wait and collect all test results
             TestResultsSummary allTestResults = runner.GetAllTestResults();
-            System.Console.WriteLine(allTestResults);
+            TestContext.Progress.WriteLine(allTestResults);
         }
 
     }
