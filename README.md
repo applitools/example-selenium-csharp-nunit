@@ -10,12 +10,24 @@
 # Steps to run this example
 
 1. Git clone this repo
+    
     * `git clone https://github.com/applitools/tutorial-selenium-csharp-ultrafastgrid.git`
+    
 2. Open the folder `tutorial-selenium-csharp-ultrafastgrid`
+
 3. Get your API key to set it in code (or in the APPLITOOLS_API_KEY environment variable).
+    
     * You can get your API key by logging into Applitools > Person Icon > My API Key.
+    
 4. Double click the `ApplitoolsTutorial.sln`. This will open the project in Visual Studio
+
 5. Change the `APPLITOOLS_API_KEY` with your own in code.
    Set your ApiKey in string 'conf.SetApiKey("...") ' (or comment the string and set APPLITOOLS_API_KEY environment variable)
+   
 6. Build the project. It can take several minutes.
+
 7. Navigate to Test Explorer, select test VGTest and hit Run
+
+8. If needed, in case of some problems - update package Eyes.Selenium by NuGet Package Manager -  Tools > NuGet Package Manager > Manage Nuget Packages for Solution, tab Updates. Select package for update (Eyes.Selenium), select needed version in right panel and tap Install
+
+    ![](NuGet.png)
