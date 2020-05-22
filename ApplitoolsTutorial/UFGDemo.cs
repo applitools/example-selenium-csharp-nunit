@@ -108,7 +108,7 @@ namespace ApplitoolsTutorial
 
 			// we pass false to this method to suppress the exception that is thrown if we
 			// find visual differences
-			TestResultsSummary allTestResults = runner.GetAllTestResults(false);
+			TestResultsSummary allTestResults = runner.GetAllTestResults();
 			System.Console.WriteLine(allTestResults);
 		}
 
