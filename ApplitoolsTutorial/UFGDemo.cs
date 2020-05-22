@@ -49,7 +49,7 @@ namespace ApplitoolsTutorial
 			Configuration config = new Configuration();
 
 			// You can get your api key from the Applitools dashboard
-			//config.SetApiKey("APPLITOOLS_API_KEY");
+			config.SetApiKey("APPLITOOLS_API_KEY");
 
 			// create a new batch info instance and set it to the configuration
 			config.SetBatch(new BatchInfo("Ultrafast Batch"));
