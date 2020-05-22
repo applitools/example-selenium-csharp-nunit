@@ -1,7 +1,6 @@
 ﻿using Applitools;
 using Applitools.Selenium;
 using Applitools.VisualGrid;
-//using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
