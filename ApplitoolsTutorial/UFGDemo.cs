@@ -19,7 +19,7 @@ namespace ApplitoolsTutorial
 			IWebDriver webDriver = new ChromeDriver();
 
 			// Create a runner with concurrency of 1
-			VisualGridRunner runner = new VisualGridRunner(1);
+			VisualGridRunner runner = new VisualGridRunner(new RunnerOptions().TestConcurrency(1));
 
 			// Create Eyes object with the runner, meaning it'll be a Visual Grid eyes.
 			Eyes eyes = new Eyes(runner);
