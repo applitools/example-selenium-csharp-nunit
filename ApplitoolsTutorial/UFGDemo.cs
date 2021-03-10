@@ -79,7 +79,7 @@ namespace ApplitoolsTutorial
 				webDriver.Url = "https://demo.applitools.com";
 
 				// Call Open on eyes to initialize a test session
-				eyes.Open(webDriver, "Demo App", "Ultrafast grid demo", new Size(800, 600));
+				eyes.Open(webDriver, "Demo App - csharp", "Ultrafast grid demo", new Size(800, 600));
 
 				// check the login page with fluent api, see more info here
 				// https://applitools.com/docs/topics/sdk/the-eyes-sdk-check-fluent-api.html
