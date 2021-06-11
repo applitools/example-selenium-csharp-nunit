@@ -1,6 +1,7 @@
 ﻿using Applitools;
 using Applitools.Selenium;
 using Applitools.VisualGrid;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
@@ -10,45 +11,35 @@ using ScreenOrientation = Applitools.VisualGrid.ScreenOrientation;
 
 namespace ApplitoolsTutorial
 {
+	[TestFixture]
     public class UFGDemo
     {
+		private EyesRunner runner;
+        private Eyes eyes;
+        private IWebDriver driver;
 
-		public static void Main(string[] args)
-		{
-			// Create a new chrome web driver
-			IWebDriver webDriver = new ChromeDriver();
+		[SetUp]
+		public void BeforeEach() {
+			var CI = Environment.GetEnvironmentVariable("CI");
+            var options = new ChromeOptions();
+            if(CI != null) {
+                options.AddArguments("headless");
+            } 
+            // Use Chrome browser
+            driver = new ChromeDriver(options);
 
-			// Create a runner with concurrency of 1
-			VisualGridRunner runner = new VisualGridRunner(new RunnerOptions().TestConcurrency(1));
-
+            //Initialize the Runner for your test with concurrency of 5.
 			// Create Eyes object with the runner, meaning it'll be a Visual Grid eyes.
-			Eyes eyes = new Eyes(runner);
+            runner = new VisualGridRunner(new RunnerOptions().TestConcurrency(5));
 
-			SetUp(eyes);
-
-			try
-			{
-				// ⭐️ Note to see visual bugs, run the test using the above URL for the 1st run.
-				// but then change the above URL to https://demo.applitools.com/index_v2.html
-				// (for the 2nd run)
-				UltraFastTest(webDriver, eyes);
-
-			}
-			finally
-			{
-				TearDown(webDriver, runner);
-			}
-
-		}
-
-		public static void SetUp(Eyes eyes)
-		{
+            // Initialize the eyes SDK (IMPORTANT: make sure your API key is set in the APPLITOOLS_API_KEY env variable).
+            eyes = new Eyes(runner);
 
 			// Initialize eyes Configuration
 			Configuration config = new Configuration();
 
 			// You can get your api key from the Applitools dashboard
-			config.SetApiKey("APPLITOOLS_API_KEY");
+			config.SetApiKey(Environment.GetEnvironmentVariable("APPLITOOLS_API_KEY"));
 
 			// create a new batch info instance and set it to the configuration
 			config.SetBatch(new BatchInfo("Ultrafast Batch"));
@@ -69,47 +60,44 @@ namespace ApplitoolsTutorial
 
 		}
 
-		public static void UltraFastTest(IWebDriver webDriver, Eyes eyes)
-		{
+		[Test]
+		public void UFGTest(){
+			            // Start the test by setting AUT's name, window or the page name that's being tested, viewport width and height
+            eyes.Open(driver, "Demo App - csharp ufg", "Smoke Test", new Size(800, 600));
 
-			try
-			{
+            // Navigate the browser to the "ACME" demo app. To see visual bugs after the first run, use the commented line below instead.
+            driver.Url = "https://demo.applitools.com/";
+            //driver.Url = "https://demo.applitools.com/index_v2.html";
 
-				// Navigate to the url we want to test
-				webDriver.Url = "https://demo.applitools.com";
+            // Visual checkpoint #1 - Check the login page. using the fluent API
+            // https://applitools.com/docs/topics/sdk/the-eyes-sdk-check-fluent-api.html?Highlight=fluent%20api
+            eyes.Check(Target.Window().Fully().WithName("Login Window"));
 
-				// Call Open on eyes to initialize a test session
-				eyes.Open(webDriver, "Demo App - csharp", "Ultrafast grid demo", new Size(800, 600));
+            // This will create a test with two test steps.
+            driver.FindElement(By.Id("log-in")).Click();
+            
+            // Visual checkpoint #2 - Check the app page.
+            eyes.Check(Target.Window().Fully().WithName("App Window"));
 
-				// check the login page with fluent api, see more info here
-				// https://applitools.com/docs/topics/sdk/the-eyes-sdk-check-fluent-api.html
-				eyes.Check(Target.Window().Fully().WithName("Login page"));
-
-				webDriver.FindElement(By.Id("log-in")).Click();
-
-				// Check the app page
-				eyes.Check(Target.Window().Fully().WithName("App page"));
-
-				// Call Close on eyes to let the server know it should display the results
-				eyes.CloseAsync();
-
-			}
-			catch (Exception e)
-			{
-				eyes.AbortAsync();
-			}
-
+            // End the test.
+            eyes.CloseAsync();
 		}
 
-		private static void TearDown(IWebDriver webDriver, VisualGridRunner runner)
-		{
-			// Close the browser
-			webDriver.Quit();
+		[TearDown]
+		public void AfrerEach(){
+			// Close the browser.
+            driver.Quit();
 
-			// we pass false to this method to suppress the exception that is thrown if we
-			// find visual differences
-			TestResultsSummary allTestResults = runner.GetAllTestResults();
-			System.Console.WriteLine(allTestResults);
+            // If the test was aborted before eyes.close was called, ends the test as aborted.
+            eyes.AbortIfNotClosed();
+
+            //Wait and collect all test results
+            // we pass false to this method to suppress the exception that is thrown if we
+            // find visual differences
+            TestResultsSummary allTestResults = runner.GetAllTestResults();
+
+            // Print results
+            Console.WriteLine(allTestResults);
 		}
 
 	}
