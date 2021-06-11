@@ -63,7 +63,7 @@ namespace ApplitoolsTutorial
 		[Test]
 		public void UFGTest(){
 			            // Start the test by setting AUT's name, window or the page name that's being tested, viewport width and height
-            eyes.Open(driver, "Demo App - csharp", "Smoke Test", new Size(800, 600));
+            eyes.Open(driver, "Demo App - csharp ufg", "Smoke Test", new Size(800, 600));
 
             // Navigate the browser to the "ACME" demo app. To see visual bugs after the first run, use the commented line below instead.
             driver.Url = "https://demo.applitools.com/";
