@@ -35,7 +35,7 @@ or you can run tests from the command line using the following `dotnet` commands
 
 ```
 dotnet build
-dotnet run
+dotnet test
 ```
 
 **For full instructions on running this project, take our
