@@ -10,6 +10,9 @@ using ScreenOrientation = Applitools.VisualGrid.ScreenOrientation;
 
 namespace Applitools.Example.Tests;
 
+/// <summary>
+/// Tests for the ACME Bank demo app.
+/// </summary>
 public class AcmeBankTest
 {
     // Test control inputs to read once and share for all tests
@@ -25,13 +28,14 @@ public class AcmeBankTest
     private WebDriver Driver;
     private Eyes Eyes;
 
+    /// <summary>
+    /// Sets up the configuration for running visual tests in the Ultrafast Grid.
+    /// The configuration is shared by all tests in a test suite, so it belongs in a `OneTimeSetUp` method.
+    /// If you have more than one test class, then you should abstract this configuration to avoid duplication.
+    /// <summary>
     [OneTimeSetUp]
     public static void SetUpConfigAndRunner()
     {
-        // This method sets up the configuration for running visual tests in the Ultrafast Grid.
-        // The configuration is shared by all tests in a test suite, so it belongs in a `OneTimeSetUp` method.
-        // If you have more than one test class, then you should abstract this configuration to avoid duplication.
-
         // Read the Applitools API key from an environment variable.
         ApplitoolsApiKey = Environment.GetEnvironmentVariable("APPLITOOLS_API_KEY");
 
@@ -73,11 +77,12 @@ public class AcmeBankTest
         Config.AddDeviceEmulation(DeviceName.Nexus_10, ScreenOrientation.Landscape);
     }
 
+    /// <summary>
+    /// Sets up each test with its own ChromeDriver and Applitools Eyes objects.
+    /// <summary>
     [SetUp]
     public void OpenBrowserAndEyes()
     {
-        // This method sets up each test with its own ChromeDriver and Applitools Eyes objects.
-
         // Open the browser with the ChromeDriver instance.
         // Even though this test will run visual checkpoints on different browsers in the Ultrafast Grid,
         // it still needs to run the test one time locally to capture snapshots.
@@ -106,15 +111,16 @@ public class AcmeBankTest
             new Size(1024, 768));           // The viewport size for the local browser
     }
 
+    /// <summary>
+    /// This test covers login for the Applitools demo site, which is a dummy banking app.
+    /// The interactions use typical Selenium WebDriver calls,
+    /// but the verifications use one-line snapshot calls with Applitools Eyes.
+    /// If the page ever changes, then Applitools will detect the changes and highlight them in the dashboard.
+    /// Traditional assertions that scrape the page for text values are not needed here.
+    /// <summary>
     [Test]
     public void LogIntoBankAccount()
     {
-        // This test covers login for the Applitools demo site, which is a dummy banking app.
-        // The interactions use typical Selenium WebDriver calls,
-        // but the verifications use one-line snapshot calls with Applitools Eyes.
-        // If the page ever changes, then Applitools will detect the changes and highlight them in the dashboard.
-        // Traditional assertions that scrape the page for text values are not needed here.
-
         // Load the login page.
         Driver.Navigate().GoToUrl("https://demo.applitools.com");
 
@@ -131,6 +137,9 @@ public class AcmeBankTest
         Eyes.Check(Target.Window().Fully().WithName("Main page").Layout());
     }
 
+    /// <summary>
+    /// Concludes the test by quitting the browser and closing Eyes.
+    /// <summary>
     [TearDown]
     public void CleanUpTest() {
 
@@ -148,6 +157,9 @@ public class AcmeBankTest
         // If any checkpoints are unresolved or failed, then `eyes.close()` will make the NUnit test fail.
     }
 
+    /// <summary>
+    /// Prints the final summary report for the test suite.
+    /// <summary>
     [OneTimeTearDown]
     public static void PrintResults() {
 
