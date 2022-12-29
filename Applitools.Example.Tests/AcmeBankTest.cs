@@ -94,6 +94,7 @@ public class AcmeBankTest
         // Create the Applitools Eyes object connected to the VisualGridRunner and set its configuration.
         Eyes = new Eyes(Runner);
         Eyes.SetConfiguration(Config);
+        Eyes.SaveNewTests = true;
 
         // Open Eyes to start visual testing.
         // It is a recommended practice to set all four inputs:
