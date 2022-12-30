@@ -151,8 +151,8 @@ public class AcmeBankTest
         // You will need to check the Applitools dashboard for visual results per checkpoint.
         // Note that "unresolved" and "failed" visual checkpoints will not cause the NUnit test to fail.
 
-        // If you want the NUnit test to wait synchronously for all checkpoints to complete, then use `eyes.close()`.
-        // If any checkpoints are unresolved or failed, then `eyes.close()` will make the NUnit test fail.
+        // If you want the NUnit test to wait synchronously for all checkpoints to complete, then use `Eyes.Close()`.
+        // If any checkpoints are unresolved or failed, then `Eyes.Close()` will make the NUnit test fail.
     }
 
     /// <summary>
