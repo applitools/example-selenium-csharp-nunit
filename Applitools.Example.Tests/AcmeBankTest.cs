@@ -1,11 +1,9 @@
-using Applitools;
 using Applitools.Selenium;
 using Applitools.VisualGrid;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Drawing;
-using System.Runtime;
 using ScreenOrientation = Applitools.VisualGrid.ScreenOrientation;
 
 namespace Applitools.Example.Tests;
@@ -141,8 +139,8 @@ public class AcmeBankTest
     /// Concludes the test by quitting the browser and closing Eyes.
     /// <summary>
     [TearDown]
-    public void CleanUpTest() {
-
+    public void CleanUpTest()
+    {
         // Quit the WebDriver instance.
         Driver.Quit();
 
@@ -161,8 +159,8 @@ public class AcmeBankTest
     /// Prints the final summary report for the test suite.
     /// <summary>
     [OneTimeTearDown]
-    public static void PrintResults() {
-
+    public static void PrintResults()
+    {
         // Close the batch and report visual differences to the console.
         // Note that it forces NUnit to wait synchronously for all visual checkpoints to complete.
         TestResultsSummary allTestResults = Runner.GetAllTestResults();
