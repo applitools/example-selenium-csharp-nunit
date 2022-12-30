@@ -1,6 +1,6 @@
 # Applitools Example: Selenium C# NUnit with the Ultrafast Grid
 
-This is the example project for the [Selenium C# NUnit tutorial](https://applitools.com/tutorials/quickstart/web/selenium/csharp).
+This is the example project for the [Selenium C# NUnit tutorial](https://applitools.com/tutorials/quickstart/web/selenium/csharp/nunit).
 It shows how to start automating visual tests
 with [Applitools Eyes](https://applitools.com/platform/eyes/)
 and the [Ultrafast Grid](https://applitools.com/platform/ultrafast-grid/)
@@ -39,4 +39,4 @@ dotnet test
 ```
 
 **For full instructions on running this project, take our
-[Selenium C# NUnit tutorial](https://applitools.com/tutorials/quickstart/web/selenium/csharp)!**
+[Selenium C# NUnit tutorial](https://applitools.com/tutorials/quickstart/web/selenium/csharp/nunit)!**
