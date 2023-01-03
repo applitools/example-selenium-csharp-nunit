@@ -4,7 +4,7 @@ This is the example project for the [Selenium C# NUnit tutorial](https://applito
 It shows how to start automating visual tests
 with [Applitools Eyes](https://applitools.com/platform/eyes/)
 and the [Ultrafast Grid](https://applitools.com/platform/ultrafast-grid/)
-using [Selenium WebDriver](https://www.selenium.dev/) in Java.
+using [Selenium WebDriver](https://www.selenium.dev/) in C#.
 
 It uses:
 
