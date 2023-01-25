@@ -141,11 +141,11 @@ public class AcmeBankTest
     [TearDown]
     public void CleanUpTest()
     {
-        // Quit the WebDriver instance.
-        Driver.Quit();
-
         // Close Eyes to tell the server it should display the results.
         Eyes.CloseAsync();
+
+        // Quit the WebDriver instance.
+        Driver.Quit();
 
         // Warning: `Eyes.CloseAsync()` will NOT wait for visual checkpoints to complete.
         // You will need to check the Eyes Test Manager for visual results per checkpoint.
