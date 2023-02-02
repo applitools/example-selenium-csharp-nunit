@@ -101,7 +101,6 @@ public class AcmeBankTest
 
         // Open Eyes to start visual testing.
         // It is a recommended practice to set all four inputs:
-        string testName = NUnit.Framework.TestContext.CurrentContext.Test.Name;
         Eyes.Open(
             
             // WebDriver object to "watch".
@@ -115,7 +114,7 @@ public class AcmeBankTest
             // The name of the test case for the given application.
             // Additional unique characteristics of the test may also be specified as part of the test name,
             // such as localization information ("Home Page - EN") or different user permissions ("Login by admin").
-            testName,
+            NUnit.Framework.TestContext.CurrentContext.Test.Name,
             
             // The viewport size for the local browser.
             // Eyes will resize the web browser to match the requested viewport size.
