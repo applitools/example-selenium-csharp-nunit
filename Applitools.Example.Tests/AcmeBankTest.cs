@@ -103,10 +103,24 @@ public class AcmeBankTest
         // It is a recommended practice to set all four inputs:
         string testName = NUnit.Framework.TestContext.CurrentContext.Test.Name;
         Eyes.Open(
-            Driver,                         // WebDriver object to "watch"
-            "ACME Bank Web App",            // The name of the app under test
-            testName,                       // The name of the test case
-            new Size(1024, 768));           // The viewport size for the local browser
+            
+            // WebDriver object to "watch".
+            Driver,
+            
+            // The name of the application under test.
+            // All tests for the same app should share the same app name.
+            // Set this name wisely: Applitools features rely on a shared app name across tests.
+            "ACME Bank Web App",
+            
+            // The name of the test case for the given application.
+            // Additional unique characteristics of the test may also be specified as part of the test name,
+            // such as localization information ("Home Page - EN") or different user permissions ("Login by admin").
+            testName,
+            
+            // The viewport size for the local browser.
+            // Eyes will resize the web browser to match the requested viewport size.
+            // This parameter is optional but encouraged in order to produce consistent results.
+            new Size(1024, 768));
     }
 
     /// <summary>
