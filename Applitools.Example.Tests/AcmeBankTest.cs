@@ -3,6 +3,7 @@ using Applitools.VisualGrid;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Remote;
 using System.Drawing;
 using ScreenOrientation = Applitools.VisualGrid.ScreenOrientation;
 
@@ -13,6 +14,13 @@ namespace Applitools.Example.Tests;
 /// </summary>
 public class AcmeBankTest
 {
+    #pragma warning disable CS0162
+    #pragma warning disable CS8618
+
+    // Test constants
+    public const bool UseUltrafastGrid = true;
+    public const bool UseExecutionCloud = false;
+    
     // Test control inputs to read once and share for all tests
     private static string? ApplitoolsApiKey;
     private static bool Headless;
@@ -20,14 +28,16 @@ public class AcmeBankTest
     // Applitools objects to share for all tests
     private static BatchInfo Batch;
     private static Configuration Config;
-    private static VisualGridRunner Runner;
+    private static EyesRunner Runner;
 
     // Test-specific objects
     private WebDriver Driver;
     private Eyes Eyes;
 
+    #pragma warning restore CS8618
+
     /// <summary>
-    /// Sets up the configuration for running visual tests in the Ultrafast Grid.
+    /// Sets up the configuration for running visual tests.
     /// The configuration is shared by all tests in a test suite, so it belongs in a `OneTimeSetUp` method.
     /// If you have more than one test class, then you should abstract this configuration to avoid duplication.
     /// <summary>
@@ -42,15 +52,24 @@ public class AcmeBankTest
         // Use headed mode for local development.
         Headless = Environment.GetEnvironmentVariable("HEADLESS")?.ToLower() == "true";
 
-        // Create the runner for the Ultrafast Grid.
-        // Concurrency refers to the number of visual checkpoints Applitools will perform in parallel.
-        // Warning: If you have a free account, then concurrency will be limited to 1.
-        Runner = new VisualGridRunner(new RunnerOptions().TestConcurrency(5));
+        if (UseUltrafastGrid)
+        {
+            // Create the runner for the Ultrafast Grid.
+            // Concurrency refers to the number of visual checkpoints Applitools will perform in parallel.
+            // Warning: If you have a free account, then concurrency will be limited to 1.
+            Runner = new VisualGridRunner(new RunnerOptions().TestConcurrency(5));
+        }
+        else
+        {
+            // Create the Classic runner for local execution.
+            Runner = new ClassicRunner();
+        }
 
         // Create a new batch for tests.
         // A batch is the collection of visual checkpoints for a test suite.
         // Batches are displayed in the Eyes Test Manager, so use meaningful names.
-        Batch = new BatchInfo("Example: Selenium C# NUnit with the Ultrafast Grid");
+        String runnerName = (UseUltrafastGrid) ? "Ultrafast Grid" : "Classic Runner";
+        Batch = new BatchInfo($"Example: Selenium C# NUnit with the {runnerName}");
 
         // Create a configuration for Applitools Eyes.
         Config = new Configuration();
@@ -63,16 +82,19 @@ public class AcmeBankTest
         // Set the batch for the config.
         Config.SetBatch(Batch);
 
-        // Add 3 desktop browsers with different viewports for cross-browser testing in the Ultrafast Grid.
-        // Other browsers are also available, like Edge and IE.
-        Config.AddBrowser(800, 600, BrowserType.CHROME);
-        Config.AddBrowser(1600, 1200, BrowserType.FIREFOX);
-        Config.AddBrowser(1024, 768, BrowserType.SAFARI);
+        if (UseUltrafastGrid)
+        {
+            // Add 3 desktop browsers with different viewports for cross-browser testing in the Ultrafast Grid.
+            // Other browsers are also available, like Edge and IE.
+            Config.AddBrowser(800, 600, BrowserType.CHROME);
+            Config.AddBrowser(1600, 1200, BrowserType.FIREFOX);
+            Config.AddBrowser(1024, 768, BrowserType.SAFARI);
 
-        // Add 2 mobile emulation devices with different orientations for cross-browser testing in the Ultrafast Grid.
-        // Other mobile devices are available, including iOS.
-        Config.AddDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.Portrait);
-        Config.AddDeviceEmulation(DeviceName.Nexus_10, ScreenOrientation.Landscape);
+            // Add 2 mobile emulation devices with different orientations for cross-browser testing in the Ultrafast Grid.
+            // Other mobile devices are available, including iOS.
+            Config.AddDeviceEmulation(DeviceName.Pixel_2, ScreenOrientation.Portrait);
+            Config.AddDeviceEmulation(DeviceName.Nexus_10, ScreenOrientation.Landscape);
+        }
     }
 
     /// <summary>
@@ -86,7 +108,17 @@ public class AcmeBankTest
         // it still needs to run the test one time locally to capture snapshots.
         ChromeOptions options = new ChromeOptions();
         if (Headless) options.AddArgument("headless");
-        Driver = new ChromeDriver(options);
+        
+        if (UseExecutionCloud)
+        {
+            // Open the browser remotely in the Execution Cloud.
+            Driver = new RemoteWebDriver(new Uri(Eyes.GetExecutionCloudURL()), options);
+        }
+        else
+        {
+            // Create a local WebDriver.
+            Driver = new ChromeDriver(options);
+        }
 
         // Set an implicit wait of 10 seconds.
         // For larger projects, use explicit waits for better control.
@@ -94,7 +126,7 @@ public class AcmeBankTest
         // The following call works for Selenium 4:
         Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
-        // Create the Applitools Eyes object connected to the VisualGridRunner and set its configuration.
+        // Create the Applitools Eyes object connected to the runner and set its configuration.
         Eyes = new Eyes(Runner);
         Eyes.SetConfiguration(Config);
         Eyes.SaveNewTests = true;
@@ -179,4 +211,6 @@ public class AcmeBankTest
         TestResultsSummary allTestResults = Runner.GetAllTestResults();
         Console.WriteLine(allTestResults);
     }
+
+    #pragma warning restore CS0162
 }

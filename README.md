@@ -1,10 +1,9 @@
-# Applitools Example: Selenium C# NUnit with the Ultrafast Grid
+# Applitools Example: Selenium in C# with NUnit
 
 This is the example project for the [Selenium C# NUnit tutorial](https://applitools.com/tutorials/quickstart/web/selenium/csharp/nunit).
 It shows how to start automating visual tests
 with [Applitools Eyes](https://applitools.com/platform/eyes/)
-and the [Ultrafast Grid](https://applitools.com/platform/ultrafast-grid/)
-using [Selenium WebDriver](https://www.selenium.dev/) in C#.
+and using [Selenium WebDriver](https://www.selenium.dev/) in C#.
 
 It uses:
 
@@ -14,7 +13,11 @@ It uses:
 * [NuGet](https://www.nuget.org/) for dependency management
 * [NUnit](https://nunit.org/) as the core test framework
 * [Applitools Eyes](https://applitools.com/platform/eyes/) for visual testing
+
+It can also run tests with:
+
 * [Applitools Ultrafast Grid](https://applitools.com/platform/ultrafast-grid/) for cross-browser execution
+* [Applitools Execution Cloud](https://applitools.com/platform/execution-cloud/) for self-healing remote WebDriver sessions
 
 To run this example project, you'll need:
 
@@ -26,6 +29,8 @@ To run this example project, you'll need:
 5. A corresponding version of [ChromeDriver](https://chromedriver.chromium.org/downloads).
 
 The main test case is [`AcmeBankTest.cs`](Applitools.Example.Tests/AcmeBankTest.cs).
+By default, the project will run tests with Ultrafast Grid but not Execution Cloud.
+You can change these settings in the test class.
 
 To execute tests, set the `APPLITOOLS_API_KEY` environment variable
 to your [account's API key](https://applitools.com/tutorials/guides/getting-started/registering-an-account).
