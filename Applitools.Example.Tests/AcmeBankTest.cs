@@ -112,7 +112,7 @@ public class AcmeBankTest
         if (UseExecutionCloud)
         {
             // Open the browser remotely in the Execution Cloud.
-            Driver = new RemoteWebDriver(new Uri(Eyes.GetExecutionCloudURL()), options);
+            Driver = new RemoteWebDriver(new Uri(Eyes.GetExecutionCloudUrl()), options);
         }
         else
         {
@@ -151,7 +151,7 @@ public class AcmeBankTest
             // The viewport size for the local browser.
             // Eyes will resize the web browser to match the requested viewport size.
             // This parameter is optional but encouraged in order to produce consistent results.
-            new Size(1024, 768));
+            new Size(1200, 600));
     }
 
     /// <summary>
@@ -187,17 +187,10 @@ public class AcmeBankTest
     public void CleanUpTest()
     {
         // Close Eyes to tell the server it should display the results.
-        Eyes.CloseAsync();
+        Eyes.Close();
 
         // Quit the WebDriver instance.
         Driver.Quit();
-
-        // Warning: `Eyes.CloseAsync()` will NOT wait for visual checkpoints to complete.
-        // You will need to check the Eyes Test Manager for visual results per checkpoint.
-        // Note that "unresolved" and "failed" visual checkpoints will not cause the NUnit test to fail.
-
-        // If you want the NUnit test to wait synchronously for all checkpoints to complete, then use `Eyes.Close()`.
-        // If any checkpoints are unresolved or failed, then `Eyes.Close()` will make the NUnit test fail.
     }
 
     /// <summary>
