@@ -28,7 +28,7 @@ public class AcmeBankTest
     // Applitools objects to share for all tests
     private static BatchInfo Batch;
     private static Configuration Config;
-    private static EyesRunner Runner;
+    private static SeleniumEyesRunner Runner;
 
     // Test-specific objects
     private WebDriver Driver;
